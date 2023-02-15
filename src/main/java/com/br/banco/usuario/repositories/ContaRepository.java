@@ -1,4 +1,4 @@
-package com.br.banco.usuario.infra.repositories.data;
+package com.br.banco.usuario.repositories;
 
 import com.br.banco.usuario.domain.Conta;
 import org.springframework.data.jpa.repository.JpaRepository;

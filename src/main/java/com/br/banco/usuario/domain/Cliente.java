@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -16,21 +15,25 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity(name = "TB_USUARIO")
 @Table(name = "TB_USUARIO")
-public class Usuario {
+public class Cliente {
     @Id
     @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
-    @Column(name = "nome")
+    @Column
     private String nome;
     @JsonSerialize(using = DateSerializer.class)
     @Column(name = "data_nascimento")
     private Date nascimento;
-    @Column(name = "cpf",length = 11,unique = true,nullable = false)
+    @Column(length = 11,unique = true,nullable = false)
     private String cpf;
-    @OneToOne(cascade=CascadeType.ALL)
-    private Conta conta;
     @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name = "id_conta")
+    private List<Conta> conta;
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name = "id_transacoes")
+    private List<Transacao> transacoes;
 }

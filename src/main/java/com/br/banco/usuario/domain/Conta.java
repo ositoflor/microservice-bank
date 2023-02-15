@@ -1,5 +1,6 @@
 package com.br.banco.usuario.domain;
 
+import com.br.banco.usuario.domain.enums.TipoConta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,19 +20,20 @@ public class Conta {
     @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
     @JsonIgnore
-    private Usuario cliente;
-    @Column(name = "agencia")
+    private Cliente cliente;
+    @Column
     private Integer agencia;
     @Column(name = "numero_conta")
     private Integer conta;
-    @Column(name = "digito")
+    @Column
     private Integer digito;
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_conta")
     private TipoConta tipoConta;
-    @Column(name = "saldo")
-    private Double saldo;
+    @Column
+    private Double saldo = 0.0;
 
 }

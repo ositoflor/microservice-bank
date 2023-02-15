@@ -1,8 +1,8 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Conta;
-import com.br.banco.usuario.domain.Usuario;
-import com.br.banco.usuario.infra.repositories.data.ContaRepository;
+import com.br.banco.usuario.domain.Cliente;
+import com.br.banco.usuario.repositories.ContaRepository;
 import com.br.banco.usuario.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,18 +19,26 @@ public class ContaServiceImpl implements ContaService {
     ContaRepository contaRepository;
 
     @Override
-    public Conta criarConta(Usuario usuario) {
+    public Conta criarConta(Cliente usuario) {
         Conta conta = new Conta();
         conta.setAgencia(4245);
         conta.setConta(Integer.parseInt(randomDigitsAsString(7)));
         conta.setSaldo(0.0);
         conta.setDigito(Integer.parseInt(randomDigitsAsString(1)));
         conta.setCliente(usuario);
+        conta.setTipoConta(usuario.getConta().get(0).getTipoConta());
         return conta;
     }
 
     @Override
     public Conta save(Conta conta) {
+        conta.setConta(Integer.parseInt(randomDigitsAsString(7)));
+        conta.setSaldo(0.0);
+        conta.setDigito(Integer.parseInt(randomDigitsAsString(1)));
+        Cliente cliente = new Cliente();
+        cliente.setId("d48737df-6f81-49e9-9f8e-9c1f2073244c");
+        conta.setCliente(cliente);
+        System.out.println(conta);
         return contaRepository.save(conta);
     }
 
