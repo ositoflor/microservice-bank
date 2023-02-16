@@ -1,21 +1,25 @@
 package com.br.banco.usuario.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "TB_USUARIO")
 @Table(name = "TB_USUARIO")
-public class Cliente {
+public class Cliente implements Serializable {
     @Id
     @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -26,14 +30,11 @@ public class Cliente {
     @Column(name = "data_nascimento")
     private Date nascimento;
     @Column(length = 11,unique = true,nullable = false)
-    private String cpf;
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    private String documento;
+    @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name = "id_conta")
+    @JsonManagedReference
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "cliente")
     private List<Conta> conta;
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name = "id_transacoes")
-    private List<Transacao> transacoes;
 }

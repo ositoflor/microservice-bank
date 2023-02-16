@@ -2,13 +2,16 @@ package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Conta;
 import com.br.banco.usuario.domain.Cliente;
+import com.br.banco.usuario.dtos.ContaDto;
 import com.br.banco.usuario.repositories.ContaRepository;
+import com.br.banco.usuario.repositories.ClienteRepository;
 import com.br.banco.usuario.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Random;
 
@@ -17,27 +20,20 @@ public class ContaServiceImpl implements ContaService {
 
     @Autowired
     ContaRepository contaRepository;
+    @Autowired
+    ClienteRepository clienteRepository;
 
     @Override
-    public Conta criarConta(Cliente usuario) {
+    @Transactional
+    public Conta save(ContaDto contaDto) {
         Conta conta = new Conta();
-        conta.setAgencia(4245);
+        conta.setTipoConta(contaDto.getTipoConta());
+        conta.setAgencia(contaDto.getAgencia());
         conta.setConta(Integer.parseInt(randomDigitsAsString(7)));
-        conta.setSaldo(0.0);
         conta.setDigito(Integer.parseInt(randomDigitsAsString(1)));
-        conta.setCliente(usuario);
-        conta.setTipoConta(usuario.getConta().get(0).getTipoConta());
-        return conta;
-    }
-
-    @Override
-    public Conta save(Conta conta) {
-        conta.setConta(Integer.parseInt(randomDigitsAsString(7)));
-        conta.setSaldo(0.0);
-        conta.setDigito(Integer.parseInt(randomDigitsAsString(1)));
-        Cliente cliente = new Cliente();
-        cliente.setId("d48737df-6f81-49e9-9f8e-9c1f2073244c");
-        conta.setCliente(cliente);
+        Optional<Cliente> cliente = clienteRepository.findById(contaDto.getId_cliente());
+        System.out.println(cliente.get());
+        conta.setCliente(cliente.get());
         System.out.println(conta);
         return contaRepository.save(conta);
     }

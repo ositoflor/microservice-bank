@@ -1,6 +1,7 @@
 package com.br.banco.usuario.controllers;
 
 import com.br.banco.usuario.domain.Conta;
+import com.br.banco.usuario.dtos.ContaDto;
 import com.br.banco.usuario.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +21,9 @@ public class ContaController {
     ContaService contaService;
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Conta> save(@RequestBody Conta conta) {
-        System.out.println(conta);
-        Conta conta1 = contaService.save(conta);
+    public ResponseEntity<Conta> save(@RequestBody ContaDto contaDto) {
+        System.out.println(contaDto);
+        Conta conta1 = contaService.save(contaDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

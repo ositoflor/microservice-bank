@@ -2,16 +2,14 @@ package com.br.banco.usuario.domain;
 
 import com.br.banco.usuario.domain.enums.TipoTransacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,7 +32,4 @@ public class Transacao {
     @ManyToOne
     @JoinColumn(name = "id_cliente_destino")
     private Cliente clienteDestinoTransacao;
-    @ManyToOne
-    @JoinColumn(name = "id_cliente_origem")
-    private Cliente clienteOrigemTransacao;
 }

@@ -1,28 +1,29 @@
 package com.br.banco.usuario.domain;
 
 import com.br.banco.usuario.domain.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "TB_CONTA")
 @Table(name = "TB_CONTA")
-public class Conta {
+public class Conta implements Serializable {
 
     @Id
     @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
-    @JsonIgnore
+    @JoinColumn(name = "cliente", referencedColumnName = "documento")
     private Cliente cliente;
     @Column
     private Integer agencia;
