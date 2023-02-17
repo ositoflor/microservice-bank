@@ -1,7 +1,7 @@
 package com.br.banco.usuario.controllers;
 
-import com.br.banco.usuario.domain.Cliente;
-import com.br.banco.usuario.services.ClienteService;
+import com.br.banco.usuario.domain.Endereco;
+import com.br.banco.usuario.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/usuario")
-public class ClienteController {
+@RequestMapping(value = "/endereco")
+public class EnderecoController {
 
     @Autowired
-    ClienteService usuarioService;
+    EnderecoService enderecoService;
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Cliente> save(@RequestBody Cliente novoUsuario) {
-        Cliente user = usuarioService.save(novoUsuario);
+    public ResponseEntity<Endereco> save(@RequestBody Endereco novoEndereco) {
+        Endereco user = enderecoService.save(novoEndereco);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -31,14 +31,15 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Cliente>> findAll(Pageable pageable) {
-        Page<Cliente> content = usuarioService.findAll(pageable);
+    public ResponseEntity<Page<Endereco>> findAll(Pageable pageable) {
+        Page<Endereco> content = enderecoService.findAll(pageable);
         return ResponseEntity.ok().body(content);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Cliente> findById(@PathVariable(value = "id") String id){
-        Cliente usuario = usuarioService.findById(id);
+    public ResponseEntity<Endereco> findById(@PathVariable(value = "id") String id){
+        Endereco usuario = enderecoService.findById(id);
+        System.out.println(usuario);
         return ResponseEntity.ok().body(usuario);
     }
 }

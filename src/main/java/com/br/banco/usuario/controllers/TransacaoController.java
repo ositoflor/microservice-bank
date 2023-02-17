@@ -1,7 +1,7 @@
 package com.br.banco.usuario.controllers;
 
-import com.br.banco.usuario.domain.Cliente;
-import com.br.banco.usuario.services.ClienteService;
+import com.br.banco.usuario.domain.Transacao;
+import com.br.banco.usuario.services.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,18 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-
+import java.util.Optional;
 @RestController
-@RequestMapping(value = "/usuario")
-public class ClienteController {
+@RequestMapping(value = "/transacao")
+public class TransacaoController {
 
     @Autowired
-    ClienteService usuarioService;
+    TransacaoService transacaoService;
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Cliente> save(@RequestBody Cliente novoUsuario) {
-        Cliente user = usuarioService.save(novoUsuario);
+    public ResponseEntity<Transacao> save(@RequestBody Transacao novaTransacao) {
+        Transacao user = transacaoService.save(novaTransacao);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -31,14 +30,15 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Cliente>> findAll(Pageable pageable) {
-        Page<Cliente> content = usuarioService.findAll(pageable);
+    public ResponseEntity<Page<Transacao>> findAll(Pageable pageable) {
+        Page<Transacao> content = transacaoService.findAll(pageable);
         return ResponseEntity.ok().body(content);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Cliente> findById(@PathVariable(value = "id") String id){
-        Cliente usuario = usuarioService.findById(id);
+    public ResponseEntity<Transacao> findById(@PathVariable(value = "id") String id){
+        Transacao usuario = transacaoService.findById(id);
+        System.out.println(usuario);
         return ResponseEntity.ok().body(usuario);
     }
 }

@@ -1,13 +1,15 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Cliente;
+import com.br.banco.usuario.exceptionHandler.ClienteExceptions.ClienteNotFound;
 import com.br.banco.usuario.repositories.ClienteRepository;
 import com.br.banco.usuario.services.ClienteService;
+import com.br.banco.usuario.services.utils.ValidadorDocumento;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -16,16 +18,17 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente save(Cliente usuario) {
+        ValidadorDocumento.validar(usuario.getDocumento());
         return usuarioRepository.save(usuario);
     }
 
     @Override
-    public List<Cliente> findAll() {
-        return usuarioRepository.findAll();
+    public Page<Cliente> findAll(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<Cliente> findById(String id) {
-        return usuarioRepository.findById(id);
+    public Cliente findById(String id) {
+        return usuarioRepository.findById(id).orElseThrow(() -> new ClienteNotFound("Cliente não encontrado."));
     }
 }

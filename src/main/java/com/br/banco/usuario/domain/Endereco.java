@@ -16,16 +16,20 @@ public class Endereco {
     @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
-    @Column(name = "rua")
+    @Column
     private String rua;
-    @Column(name = "numero")
+    @Column
     private Integer numero;
-    @Column(name = "complemento")
+    @Column
     private String complemento;
-    @Column(name = "bairro")
+    @Column
+    private String cep;
+    @Column
     private String bairro;
-    @Column(name = "cidade")
+    @Column
     private String cidade;
-    @Column(name = "estado")
+    @Column
     private String estado;
+    @Column
+    private String idCliente;
 }

@@ -1,40 +1,39 @@
 package com.br.banco.usuario.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
+
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "TB_USUARIO")
-@Table(name = "TB_USUARIO")
-public class Cliente implements Serializable {
+@Entity(name = "TB_CLIENTE")
+@Table(name = "TB_CLIENTE")
+public class Cliente {
     @Id
     @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
     @Column
     private String nome;
-    @JsonSerialize(using = DateSerializer.class)
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "data_nascimento")
-    private Date nascimento;
-    @Column(length = 11,unique = true,nullable = false)
+    private LocalDateTime dataNascimento;
+    @Column(length = 14,unique = true,nullable = false)
     private String documento;
-    @OneToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
-    @JsonManagedReference
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "cliente")
-    private List<Conta> conta;
+    @Column
+    private BigDecimal renda;
+    @Column
+    private String telefone;
+
 }

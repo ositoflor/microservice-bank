@@ -39,8 +39,8 @@ public class ContaController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<Conta>> findById(@PathVariable(value = "id") String id){
-        Optional<Conta> conta = contaService.findById(id);
+    public ResponseEntity<Conta> findById(@PathVariable(value = "id") String id){
+        Conta conta = contaService.findById(id);
         return ResponseEntity.ok().body(conta);
     }
 }

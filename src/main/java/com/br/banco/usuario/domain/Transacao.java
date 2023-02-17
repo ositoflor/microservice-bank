@@ -26,10 +26,12 @@ public class Transacao {
     @Column(name = "tipo_transacao")
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipoTransacao;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "data_hora_transacao")
     private LocalDateTime dataHoraTransacao;
-    @ManyToOne
-    @JoinColumn(name = "id_cliente_destino")
-    private Cliente clienteDestinoTransacao;
+    @Column(name = "id_cliente_destino")
+    private String clienteDestinoTransacao;
+    @Column(name = "id_cliente_origem")
+    private String clienteOrigemTransacao;
+
 }

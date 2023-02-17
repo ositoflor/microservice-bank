@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContaDto {
-    private String id_cliente;
-    private TipoConta tipoConta;
+    private String idCliente;
+    private String documentoCliente;
     private Integer agencia;
 }
