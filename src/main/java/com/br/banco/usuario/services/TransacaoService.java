@@ -8,4 +8,5 @@ public interface TransacaoService {
     Transacao save(Transacao transacao);
     Page<Transacao> findAll(Pageable pageable);
     Transacao findById(String id);
+    Page<Transacao> findByIdConta(String id, Pageable pageable);
 }

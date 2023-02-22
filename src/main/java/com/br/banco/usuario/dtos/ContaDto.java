@@ -1,15 +1,17 @@
 package com.br.banco.usuario.dtos;
 
-import com.br.banco.usuario.domain.enums.TipoConta;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContaDto {
+    @NotNull
     private String idCliente;
-    private String documentoCliente;
+    @NotBlank
     private Integer agencia;
 }

@@ -3,17 +3,13 @@ package com.br.banco.usuario.domain.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public enum TipoConta {
-    PF("PF", "Pessoa Fisica"),
-    PJ("PJ", "Pessoa Juridica"),
-    GOV("GOV", "Governamental");
-
+public enum TipoDocumento {
+    CPF("CPF", "Cadastro de Pessoa Física"),
+    CNPJ("CNJP", "Cadastro Nacional de Pessoas Jurídicas");
     private String sigla;
-
     private String descricao;
 }

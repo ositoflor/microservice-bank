@@ -17,9 +17,10 @@ public class ClienteServiceImpl implements ClienteService {
     ClienteRepository usuarioRepository;
 
     @Override
-    public Cliente save(Cliente usuario) {
-        ValidadorDocumento.validar(usuario.getDocumento());
-        return usuarioRepository.save(usuario);
+    public Cliente save(Cliente cliente) {
+        String documento = ValidadorDocumento.validar(cliente);
+        cliente.setDocumento(documento);
+        return usuarioRepository.save(cliente);
     }
 
     @Override

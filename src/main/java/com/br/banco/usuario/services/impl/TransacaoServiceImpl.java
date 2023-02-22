@@ -29,4 +29,9 @@ public class TransacaoServiceImpl implements TransacaoService {
     public Transacao findById(String id) {
         return transacaoRepository.findById(id).orElseThrow(()-> new TransacaoNotFound("Transação não encontrada."));
     }
+
+    @Override
+    public Page<Transacao> findByIdConta(String id, Pageable pageable) {
+        return transacaoRepository.findByIdConta(id, pageable);
+    }
 }

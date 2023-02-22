@@ -10,4 +10,5 @@ public interface ContaService {
     Conta save(ContaDto contaDto);
     Page<Conta> findAll(Pageable pageable);
     Conta findById(String id);
+    Conta findByIdCliente(String id);
 }

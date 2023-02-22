@@ -33,5 +33,7 @@ public class Transacao {
     private String clienteDestinoTransacao;
     @Column(name = "id_cliente_origem")
     private String clienteOrigemTransacao;
+    @Column(name = "id_conta")
+    private String idConta;
 
 }

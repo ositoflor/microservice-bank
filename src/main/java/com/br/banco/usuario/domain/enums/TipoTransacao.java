@@ -1,5 +1,12 @@
 package com.br.banco.usuario.domain.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public enum TipoTransacao {
     BO("BO", "Boleto"),
     DE("DE", "Deposito"),
@@ -14,17 +21,4 @@ public enum TipoTransacao {
     private String sigla;
 
     private String descricao;
-
-    TipoTransacao(String sigla, String descricao) {
-        this.sigla = sigla;
-        this.descricao = descricao;
-    }
-
-    public String getSigla() {
-        return sigla;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
 }
