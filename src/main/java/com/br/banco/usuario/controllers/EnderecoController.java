@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/endereco")
@@ -37,7 +36,7 @@ public class EnderecoController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Endereco> findById(@PathVariable(value = "id") String id){
+    public ResponseEntity<Endereco> findById(@PathVariable(value = "id") String id) {
         Endereco usuario = enderecoService.findById(id);
         System.out.println(usuario);
         return ResponseEntity.ok().body(usuario);

@@ -9,12 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 @Service
 public class EnderecoServiceImpl implements EnderecoService {
 
     @Autowired
     EnderecoRepository enderecoRepository;
+
     @Override
     public Endereco save(Endereco endereco) {
         return enderecoRepository.save(endereco);
@@ -27,6 +27,6 @@ public class EnderecoServiceImpl implements EnderecoService {
 
     @Override
     public Endereco findById(String id) {
-        return enderecoRepository.findById(id).orElseThrow(()-> new EnderecoNotFound("Endereço não encontrado."));
+        return enderecoRepository.findById(id).orElseThrow(() -> new EnderecoNotFound("Endereço não encontrado."));
     }
 }

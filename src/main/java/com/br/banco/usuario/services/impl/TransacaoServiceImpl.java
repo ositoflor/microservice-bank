@@ -9,12 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 @Service
 public class TransacaoServiceImpl implements TransacaoService {
 
     @Autowired
     TransacaoRepository transacaoRepository;
+
     @Override
     public Transacao save(Transacao transacao) {
         return transacaoRepository.save(transacao);
@@ -27,7 +27,7 @@ public class TransacaoServiceImpl implements TransacaoService {
 
     @Override
     public Transacao findById(String id) {
-        return transacaoRepository.findById(id).orElseThrow(()-> new TransacaoNotFound("Transação não encontrada."));
+        return transacaoRepository.findById(id).orElseThrow(() -> new TransacaoNotFound("Transação não encontrada."));
     }
 
     @Override

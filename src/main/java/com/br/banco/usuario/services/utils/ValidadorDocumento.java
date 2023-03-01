@@ -12,8 +12,6 @@ import com.br.banco.usuario.exceptionHandler.CNPJInvalidException;
 import com.br.banco.usuario.exceptionHandler.CPFInvalidException;
 import com.br.banco.usuario.exceptionHandler.DocumentoInvalidException;
 
-import java.util.Formatter;
-
 public class ValidadorDocumento {
 
     public static String validar(Cliente cliente) {
@@ -36,10 +34,10 @@ public class ValidadorDocumento {
     public static Boolean validarCPF(String doc) {
         CPFValidator validator = new CPFValidator();
 
-        try{
+        try {
             validator.assertValid(doc);
             return true;
-        }catch (InvalidStateException e) {
+        } catch (InvalidStateException e) {
             throw new CPFInvalidException(e.getMessage());
         }
     }
@@ -47,15 +45,15 @@ public class ValidadorDocumento {
     public static Boolean validarCNPJ(String doc) {
         CNPJValidator validator = new CNPJValidator();
 
-        try{
+        try {
             validator.assertValid(doc);
             return true;
-        }catch (InvalidStateException e) {
+        } catch (InvalidStateException e) {
             throw new CNPJInvalidException(e.getMessage());
         }
     }
 
-    public static TipoConta validarTipoConta(Cliente cliente){
+    public static TipoConta validarTipoConta(Cliente cliente) {
         if (cliente.getTipoDocumento() == TipoDocumento.CPF) {
             validarCPF(cliente.getDocumento());
             return TipoConta.PF;

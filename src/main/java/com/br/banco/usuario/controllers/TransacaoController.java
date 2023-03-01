@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "/transacao")
 public class TransacaoController {
@@ -36,7 +36,7 @@ public class TransacaoController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Transacao> findById(@PathVariable(value = "id") String id){
+    public ResponseEntity<Transacao> findById(@PathVariable(value = "id") String id) {
         Transacao usuario = transacaoService.findById(id);
         System.out.println(usuario);
         return ResponseEntity.ok().body(usuario);
@@ -44,7 +44,7 @@ public class TransacaoController {
 
     @GetMapping(value = "/conta/{id}")
     public ResponseEntity<Page<Transacao>> findByIdConta(@PathVariable(value = "id") String id, Pageable pageable) {
-        Page<Transacao> transacoes = transacaoService.findByIdConta(id,pageable);
+        Page<Transacao> transacoes = transacaoService.findByIdConta(id, pageable);
         return ResponseEntity.ok().body(transacoes);
     }
 }

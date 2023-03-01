@@ -1,10 +1,13 @@
 package com.br.banco.usuario.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +16,7 @@ import java.util.UUID;
 @Table(name = "TB_ENDERECO")
 public class Endereco {
     @Id
-    @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
+    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
     @Column

@@ -1,7 +1,10 @@
 package com.br.banco.usuario.domain;
 
 import com.br.banco.usuario.domain.enums.TipoConta;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,10 +16,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name = "TB_CONTA")
 @Table(name = "TB_CONTA")
-public class Conta{
+public class Conta {
 
     @Id
-    @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
+    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
     @Column
@@ -34,5 +37,6 @@ public class Conta{
     private String documentoCliente;
     @Column(name = "id_cliente")
     private String idCliente;
-
+    @Column(name = "quantidade_saque")
+    private Integer quantidadeSaque;
 }

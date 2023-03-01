@@ -1,7 +1,6 @@
 package com.br.banco.usuario.controllers;
 
 import com.br.banco.usuario.domain.Cliente;
-import com.br.banco.usuario.domain.Transacao;
 import com.br.banco.usuario.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/usuario")
@@ -38,11 +36,10 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Cliente> findById(@PathVariable(value = "id") String id){
+    public ResponseEntity<Cliente> findById(@PathVariable(value = "id") String id) {
         Cliente cliente = clienteService.findById(id);
         return ResponseEntity.ok().body(cliente);
     }
-
 
 
 }

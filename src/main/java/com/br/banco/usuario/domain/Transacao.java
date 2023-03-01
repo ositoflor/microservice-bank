@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Transacao {
 
     @Id
-    @GenericGenerator(name="UUIDGenerator", strategy ="uuid2")
+    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
     @Column
