@@ -2,10 +2,7 @@ package com.br.banco.usuario.controllers;
 
 import com.br.banco.usuario.domain.Cliente;
 import com.br.banco.usuario.domain.Conta;
-import com.br.banco.usuario.dtos.ContaDto;
-import com.br.banco.usuario.dtos.DepositoDto;
-import com.br.banco.usuario.dtos.SaqueDto;
-import com.br.banco.usuario.dtos.TransferenciaDto;
+import com.br.banco.usuario.dtos.*;
 import com.br.banco.usuario.services.ContaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +18,12 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/conta")
-@RequiredArgsConstructor
 public class ContaController {
 
     @Autowired
     ContaService contaService;
-    private final KafkaTemplate<String,String > templete;
+    @Autowired
+    private KafkaTemplate<String, SolicitacaoDto> kafkaTemplate;
 
     @PostMapping(value = "/add")
     public ResponseEntity<Conta> save(@RequestBody @Valid ContaDto contaDto) {
@@ -65,10 +62,17 @@ public class ContaController {
         return ResponseEntity.ok().body(conta);
     }
 
-    @PutMapping(value = "/sacar/{valor}/{id}")
-    public ResponseEntity<SaqueDto> sacar(@PathVariable(value = "valor")Double valor, @PathVariable(value = "id")String id) {
-        SaqueDto saqueDto = contaService.saque(id,valor);
-        templete.send("Transacao",id);
+    @PostMapping(value = "/solicitar-saque")
+    public ResponseEntity<SolicitacaoRespostaDto> sacar(@RequestBody SaqueDto saqueDto) {
+        SolicitacaoDto solicitacaoDto = contaService.solicitarSaque(saqueDto);
+        SolicitacaoRespostaDto solicitacaoRespostaDto = new SolicitacaoRespostaDto(solicitacaoDto.getIdSolicitacao(), solicitacaoDto.getDateTime());
+        kafkaTemplate.send("Solicitacao-2", solicitacaoDto);
+        return ResponseEntity.ok().body(solicitacaoRespostaDto);
+    }
+
+    @PostMapping(value = "/validar-saque")
+    public ResponseEntity<SaqueDto> validarSaque(@RequestParam(name = "id-solicitacao")String id) {
+        SaqueDto saqueDto = contaService.validarSaque(id);
         return ResponseEntity.ok().body(saqueDto);
     }
 

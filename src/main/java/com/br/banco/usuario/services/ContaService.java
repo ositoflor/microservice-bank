@@ -1,10 +1,7 @@
 package com.br.banco.usuario.services;
 
 import com.br.banco.usuario.domain.Conta;
-import com.br.banco.usuario.dtos.ContaDto;
-import com.br.banco.usuario.dtos.DepositoDto;
-import com.br.banco.usuario.dtos.SaqueDto;
-import com.br.banco.usuario.dtos.TransferenciaDto;
+import com.br.banco.usuario.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +12,8 @@ public interface ContaService {
     Conta findById(String id);
     Conta findByConta(Integer agencia, Integer conta, Integer digito);
     Conta findByIdCliente(String id);
-    SaqueDto saque(String id, Double valor);
+    SolicitacaoDto solicitarSaque(SaqueDto saqueDto);
+    SaqueDto validarSaque(String id);
     DepositoDto deposito(DepositoDto depositoDto);
     TransferenciaDto transferenciaTed(TransferenciaDto transferenciaDto);
     TransferenciaDto transferenciaDoc(TransferenciaDto transferenciaDto);

@@ -1,7 +1,7 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Endereco;
-import com.br.banco.usuario.exceptionHandler.EnderecoExceptions.EnderecoNotFound;
+import com.br.banco.usuario.exceptionHandler.DefaultNotFound;
 import com.br.banco.usuario.repositories.EnderecoRepository;
 import com.br.banco.usuario.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,6 @@ public class EnderecoServiceImpl implements EnderecoService {
 
     @Override
     public Endereco findById(String id) {
-        return enderecoRepository.findById(id).orElseThrow(() -> new EnderecoNotFound("Endereço não encontrado."));
+        return enderecoRepository.findById(id).orElseThrow(() -> new DefaultNotFound("Endereço não encontrado."));
     }
 }

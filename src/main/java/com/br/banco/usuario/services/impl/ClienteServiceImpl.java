@@ -1,7 +1,7 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Cliente;
-import com.br.banco.usuario.exceptionHandler.ClienteExceptions.ClienteNotFound;
+import com.br.banco.usuario.exceptionHandler.DefaultNotFound;
 import com.br.banco.usuario.repositories.ClienteRepository;
 import com.br.banco.usuario.services.ClienteService;
 import com.br.banco.usuario.services.utils.ValidadorDocumento;
@@ -30,6 +30,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente findById(String id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new ClienteNotFound("Cliente não encontrado."));
+        return usuarioRepository.findById(id).orElseThrow(() -> new DefaultNotFound("Cliente não encontrado."));
     }
 }

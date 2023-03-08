@@ -8,8 +8,6 @@ import br.com.caelum.stella.validation.InvalidStateException;
 import com.br.banco.usuario.domain.Cliente;
 import com.br.banco.usuario.domain.enums.TipoConta;
 import com.br.banco.usuario.domain.enums.TipoDocumento;
-import com.br.banco.usuario.exceptionHandler.CNPJInvalidException;
-import com.br.banco.usuario.exceptionHandler.CPFInvalidException;
 import com.br.banco.usuario.exceptionHandler.DocumentoInvalidException;
 
 public class ValidadorDocumento {
@@ -27,7 +25,7 @@ public class ValidadorDocumento {
             validarCNPJ(CNPJ);
             return CNPJ;
         }
-        throw new DocumentoInvalidException();
+        throw new DocumentoInvalidException("Docuemento inválido.");
     }
 
 
@@ -38,7 +36,7 @@ public class ValidadorDocumento {
             validator.assertValid(doc);
             return true;
         } catch (InvalidStateException e) {
-            throw new CPFInvalidException(e.getMessage());
+            throw new DocumentoInvalidException(e.getMessage());
         }
     }
 
@@ -49,7 +47,7 @@ public class ValidadorDocumento {
             validator.assertValid(doc);
             return true;
         } catch (InvalidStateException e) {
-            throw new CNPJInvalidException(e.getMessage());
+            throw new DocumentoInvalidException(e.getMessage());
         }
     }
 
@@ -63,6 +61,6 @@ public class ValidadorDocumento {
             validarCNPJ(cliente.getDocumento());
             return TipoConta.PJ;
         }
-        throw new DocumentoInvalidException();
+        throw new DocumentoInvalidException("Docuemento inválido.");
     }
 }

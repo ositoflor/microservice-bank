@@ -1,7 +1,7 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Transacao;
-import com.br.banco.usuario.exceptionHandler.TransacaoExceptions.TransacaoNotFound;
+import com.br.banco.usuario.exceptionHandler.DefaultNotFound;
 import com.br.banco.usuario.repositories.TransacaoRepository;
 import com.br.banco.usuario.services.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TransacaoServiceImpl implements TransacaoService {
 
     @Override
     public Transacao findById(String id) {
-        return transacaoRepository.findById(id).orElseThrow(() -> new TransacaoNotFound("Transação não encontrada."));
+        return transacaoRepository.findById(id).orElseThrow(() -> new DefaultNotFound("Transação não encontrada."));
     }
 
     @Override

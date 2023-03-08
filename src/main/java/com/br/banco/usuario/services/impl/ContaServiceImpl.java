@@ -2,18 +2,18 @@ package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Cliente;
 import com.br.banco.usuario.domain.Conta;
+import com.br.banco.usuario.domain.Solicitacao;
 import com.br.banco.usuario.domain.Transacao;
+import com.br.banco.usuario.domain.enums.StatusSolicitacao;
 import com.br.banco.usuario.domain.enums.TipoConta;
 import com.br.banco.usuario.domain.enums.TipoTransacao;
-import com.br.banco.usuario.dtos.ContaDto;
-import com.br.banco.usuario.dtos.DepositoDto;
-import com.br.banco.usuario.dtos.SaqueDto;
-import com.br.banco.usuario.dtos.TransferenciaDto;
-import com.br.banco.usuario.exceptionHandler.ContaExceptions.ContaNotFound;
+import com.br.banco.usuario.dtos.*;
 import com.br.banco.usuario.exceptionHandler.ContaExceptions.SaldoNotValid;
+import com.br.banco.usuario.exceptionHandler.DefaultNotFound;
 import com.br.banco.usuario.repositories.ContaRepository;
 import com.br.banco.usuario.services.ClienteService;
 import com.br.banco.usuario.services.ContaService;
+import com.br.banco.usuario.services.SolicitacaoService;
 import com.br.banco.usuario.services.TransacaoService;
 import com.br.banco.usuario.services.utils.GeradorConta;
 import com.br.banco.usuario.services.utils.GerarTransacao;
@@ -32,12 +32,12 @@ public class ContaServiceImpl implements ContaService {
 
     @Autowired
     ContaRepository contaRepository;
-
     @Autowired
     ClienteService clienteService;
-
     @Autowired
     TransacaoService transacaoService;
+    @Autowired
+    SolicitacaoService solicitacaoService;
 
     @Override
     @Transactional
@@ -57,46 +57,52 @@ public class ContaServiceImpl implements ContaService {
 
     @Override
     public Conta findById(String id) {
-        return contaRepository.findById(id).orElseThrow(() -> new ContaNotFound("Conta não encontrada."));
+        return contaRepository.findById(id).orElseThrow(() -> new DefaultNotFound("Conta não encontrada."));
     }
 
     @Override
     public Conta findByConta(Integer agencia, Integer conta, Integer digito) {
         var response = contaRepository.findByContaBydigitoByAgencia(agencia,conta,digito);
-        System.out.println();
-        System.out.println(response.toString());
-        return response.orElseThrow(() -> new ContaNotFound("Conta não encontrada."));
+        return response.orElseThrow(() -> new DefaultNotFound("Conta não encontrada."));
     }
 
     @Override
     public Conta findByIdCliente(String id) {
-        return contaRepository.findByIdCliente(id).orElseThrow(() -> new ContaNotFound("Conta não encontrada."));
+        return contaRepository.findByIdCliente(id).orElseThrow(() -> new DefaultNotFound("Conta não encontrada."));
     }
 
     @Override
-    public SaqueDto saque(String id, Double valor) {
-        Conta conta = findById(id);
-        SaqueDto saqueDto = new SaqueDto();
-        Transacao transacao = GerarTransacao.gerar(id,TipoTransacao.SA,valor);
-        transacao.setClienteOrigemTransacao(conta.getIdCliente());
-        if (conta.getSaldo() < valor){
+    public SolicitacaoDto solicitarSaque(SaqueDto saqueDto) {
+        Conta conta = findByConta(saqueDto.getAgencia(), saqueDto.getConta(),saqueDto.getDigito());
+        Solicitacao solicitacao = new Solicitacao();
+        solicitacao.setIdConta(conta.getId());
+        solicitacao.setValorSolitidado(saqueDto.getValorSaque());
+        solicitacao.setTipoTransacao(TipoTransacao.SA);
+        var res = solicitacaoService.save(solicitacao);
+        SolicitacaoDto solicitacaoDto = new SolicitacaoDto(conta, saqueDto.getValorSaque(), res.getId(), res.getLocalDateTime());
+        return solicitacaoDto;
+    }
+
+    @Override
+    public SaqueDto validarSaque(String id) {
+        Solicitacao solicitacao = solicitacaoService.findById(id);
+        Conta conta = findById(solicitacao.getIdConta());
+        if (solicitacao.getStatusSolicitacao() != StatusSolicitacao.AT){
             throw new SaldoNotValid();
         }
-        if (conta.getQuantidadeSaque() == 0){
-            var valorDebitado = valor + conta.getTipoConta().getValorSaque();
-            if (conta.getSaldo() < valorDebitado){
-                throw new SaldoNotValid();
-            }
-            conta.setSaldo(conta.getSaldo() - valorDebitado);
-            contaRepository.save(conta);
-            transacao.setValor(valorDebitado);
-            transacaoService.save(transacao);
-            return saqueDto;
+        if (conta.getQuantidadeSaque() > 0) {
+            conta.setQuantidadeSaque(conta.getQuantidadeSaque() - 1);
         }
-        conta.setSaldo(conta.getSaldo() - valor);
+        conta.setSaldo(conta.getSaldo() - solicitacao.getValorDebitado());
         contaRepository.save(conta);
-        transacao.setValor(valor);
+        Transacao transacao = GerarTransacao.gerar(conta.getId(),solicitacao.getTipoTransacao(), solicitacao.getValorDebitado());
+        transacao.setClienteOrigemTransacao(conta.getIdCliente());
         transacaoService.save(transacao);
+        SaqueDto saqueDto= new SaqueDto();
+        saqueDto.setAgencia(conta.getAgencia());
+        saqueDto.setConta(conta.getConta());
+        saqueDto.setDigito(conta.getDigito());
+        saqueDto.setValorSaque(solicitacao.getValorSolitidado());
         return saqueDto;
     }
 
