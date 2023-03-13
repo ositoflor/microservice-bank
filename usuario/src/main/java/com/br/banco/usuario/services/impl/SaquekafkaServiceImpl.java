@@ -19,7 +19,6 @@ public class SaquekafkaServiceImpl implements SaqueKafkaService {
         Solicitacao solicitacao = solicitacaoService.findById(respostaSolicitacaoDto.getIdSolicitacao());
         solicitacao.setStatusSolicitacao(respostaSolicitacaoDto.getStatusSolicitacao());
         solicitacao.setValorDebitado(respostaSolicitacaoDto.getValorDebitado());
-        System.out.println(solicitacao);
         solicitacaoService.save(solicitacao);
     }
 }

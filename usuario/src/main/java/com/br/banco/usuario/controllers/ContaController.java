@@ -2,6 +2,7 @@ package com.br.banco.usuario.controllers;
 
 import com.br.banco.usuario.domain.Cliente;
 import com.br.banco.usuario.domain.Conta;
+import com.br.banco.usuario.domain.Transacao;
 import com.br.banco.usuario.dtos.*;
 import com.br.banco.usuario.services.ContaService;
 import lombok.RequiredArgsConstructor;
@@ -76,25 +77,33 @@ public class ContaController {
         return ResponseEntity.ok().body(saqueDto);
     }
 
-    @PutMapping(value = "/depositar")
+    @PostMapping(value = "/depositar")
     public ResponseEntity<DepositoDto> depositar(@RequestBody DepositoDto depositoDto){
         DepositoDto deposito = contaService.deposito(depositoDto);
         return ResponseEntity.ok().body(deposito);
     }
 
-    @PutMapping(value = "/ted")
+    @PostMapping(value = "/ted")
     public ResponseEntity<TransferenciaDto> ted(@RequestBody TransferenciaDto transferenciaDto) {
         TransferenciaDto transferencia = contaService.transferenciaTed(transferenciaDto);
         return ResponseEntity.ok().body(transferencia);
     }
-    @PutMapping(value = "/doc")
+    @PostMapping(value = "/doc")
     public ResponseEntity<TransferenciaDto> doc(@RequestBody TransferenciaDto transferenciaDto) {
         TransferenciaDto transferencia = contaService.transferenciaDoc(transferenciaDto);
         return ResponseEntity.ok().body(transferencia);
     }
-    @PutMapping(value = "/pix")
+    @PostMapping(value = "/pix")
     public ResponseEntity<TransferenciaDto> pix(@RequestBody TransferenciaDto transferenciaDto) {
         TransferenciaDto transferencia = contaService.transferenciaPix(transferenciaDto);
         return ResponseEntity.ok().body(transferencia);
+    }
+
+    @GetMapping(value = "/extrato")
+    public ResponseEntity<Page<Transacao>> extrato(@RequestParam(name = "agencia")Integer agencia,
+                                  @RequestParam(name = "conta")Integer conta,
+                                  @RequestParam(name = "digito")Integer digito, Pageable pageable){
+        Page<Transacao> extrato = contaService.extrato(agencia, conta, digito, pageable);
+        return ResponseEntity.ok().body(extrato);
     }
 }

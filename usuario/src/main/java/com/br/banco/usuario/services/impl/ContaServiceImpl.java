@@ -164,4 +164,11 @@ public class ContaServiceImpl implements ContaService {
         transacaoService.save(transacao);
         return transferenciaDto;
     }
+
+    @Override
+    public Page<Transacao> extrato(Integer agencia, Integer conta, Integer digito, Pageable pageable) {
+        Conta conta1 = findByConta(agencia,conta,digito);
+        Page<Transacao> extrato = transacaoService.findByIdConta(conta1.getId(),pageable);
+        return extrato;
+    }
 }

@@ -1,6 +1,7 @@
 package com.br.banco.usuario.services;
 
 import com.br.banco.usuario.domain.Conta;
+import com.br.banco.usuario.domain.Transacao;
 import com.br.banco.usuario.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,5 @@ public interface ContaService {
     TransferenciaDto transferenciaTed(TransferenciaDto transferenciaDto);
     TransferenciaDto transferenciaDoc(TransferenciaDto transferenciaDto);
     TransferenciaDto transferenciaPix(TransferenciaDto transferenciaDto);
+    Page<Transacao> extrato(Integer agencia, Integer conta, Integer digito, Pageable pageable);
 }
