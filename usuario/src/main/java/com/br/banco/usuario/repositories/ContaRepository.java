@@ -1,6 +1,7 @@
 package com.br.banco.usuario.repositories;
 
 import com.br.banco.usuario.domain.Conta;
+import com.br.banco.usuario.domain.enums.TipoConta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,8 @@ public interface ContaRepository extends JpaRepository<Conta, String> {
     @Modifying
     @Query(value = "UPDATE TB_CONTA c SET c.saldo= :valor WHERE c.id = :id ")
     void updateSaldoConta(@Param("id")String id, @Param("valor")Double valor);
+
+    @Modifying
+    @Query(value = "UPDATE TB_CONTA c SET c.quantidadeSaque= :quantidade WHERE c.tipoConta = :tipoConta ")
+    void updateSaques(@Param("tipoConta")TipoConta tipoConta, @Param("quantidade")Integer quantidate);
 }

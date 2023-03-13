@@ -12,13 +12,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 @Service
-@EnableScheduling
 public class ContaServiceImpl implements ContaService {
 
     @Autowired
     private KafkaTemplate<String, RespostaSolicitacaoDto> kafkaTemplate;
-
-    private static final String TIME_ZONE = "America/Sao_Paulo";
     @Override
     @KafkaListener(topics = "Solicitacao-2", containerFactory = "solicitacaoKafkaListenerFactory", groupId = "group_json")
     public void validaSaque(@Payload SolicitacaoDto solicitacao) {
@@ -49,13 +46,4 @@ public class ContaServiceImpl implements ContaService {
         }
 
     }
-
-    /*@Override
-    @Scheduled(cron = "0/20 * * * * *", zone = TIME_ZONE)
-    public void rotinaMensal() {
-        for (TipoConta tipoConta : TipoConta.values()) {
-            contaRepository.updateSaques(tipoConta,tipoConta.getQuantidadeSaque());
-        }
-        System.out.println("Rodou a rotina :D");
-    }*/
 }
