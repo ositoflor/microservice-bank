@@ -12,7 +12,7 @@
 	<artifactId>usuario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>usuario</name>
-	<description>Serviço para cadastro de contas para usuários   </description>
+	<description>Sistema de banco, criando clientes, contas e fazendo toda movimentações de um banco</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
