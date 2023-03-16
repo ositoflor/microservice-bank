@@ -1,7 +1,8 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Transacao;
-import com.br.banco.usuario.exceptionHandler.DefaultNotFound;
+import com.br.banco.usuario.domain.enums.TipoTransacao;
+import com.br.banco.usuario.exceptionHandler.BusinessException;
 import com.br.banco.usuario.repositories.TransacaoRepository;
 import com.br.banco.usuario.services.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,19 @@ public class TransacaoServiceImpl implements TransacaoService {
 
     @Override
     public Transacao findById(String id) {
-        return transacaoRepository.findById(id).orElseThrow(() -> new DefaultNotFound("Transação não encontrada."));
+        return transacaoRepository.findById(id).orElseThrow(() -> new BusinessException("Transação não encontrada."));
     }
 
     @Override
-    public Page<Transacao> findByIdConta(String id, Pageable pageable) {
-        return transacaoRepository.findByIdConta(id, pageable);
+    public Page<Transacao> findByIdConta(String id,Pageable pageable) {
+        return transacaoRepository.findByIdContaOrderByDataHoraTransacaoDesc(id,pageable);
     }
+
+    @Override
+    public Page<Transacao> findByIdContaByTipoTransacao(String id,TipoTransacao tipoTransacao, Pageable pageable) {
+        System.out.println(tipoTransacao);
+        return transacaoRepository.findByIdContaAndTipoTransacaoOrderByDataHoraTransacaoDesc(id,tipoTransacao,pageable);
+    }
+
+
 }

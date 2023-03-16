@@ -28,4 +28,5 @@ public class Solicitacao {
     private LocalDateTime localDateTime = LocalDateTime.now();
     @Enumerated(EnumType.STRING)
     private StatusSolicitacao statusSolicitacao = StatusSolicitacao.PD;
+    private Boolean isVerificado = false;
 }

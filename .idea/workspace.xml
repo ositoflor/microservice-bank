@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c5fe6e5-287e-456b-b459-6178b574c18e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/controllers/ContaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/controllers/ContaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/ContaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/ContaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/impl/ContaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/impl/ContaServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/impl/SaquekafkaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/impl/SaquekafkaServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="532b2e6f-a78c-47c4-a8ec-30351f3d34f1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,14 +13,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -43,7 +33,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2Lh10hMjNonpTuLxCyM3FeGCjm9" />
+  <component name="ProjectId" id="2N0Y5D7a8U5Dtt4T58pNJCk2S3W" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -52,9 +42,14 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Neto/Desktop/saque&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Neto/Desktop/usuarios&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.br.banco.usuario.exceptionHandler" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="UsuarioApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.br.banco.usuario.UsuarioApplication" />
@@ -78,24 +73,28 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2c5fe6e5-287e-456b-b459-6178b574c18e" name="Changes" comment="" />
-      <created>1676308278568</created>
+      <changelist id="532b2e6f-a78c-47c4-a8ec-30351f3d34f1" name="Changes" comment="" />
+      <created>1678802280756</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1676308278568</updated>
+      <updated>1678802280756</updated>
     </task>
     <servers />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/br/banco/usuario/services/impl/TransacaoServiceImpl.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.data.domain.Sort" memberName="orders" />
       </pinned-members>
     </pin-to-top-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="((Sort)((PageRequest)pageable).sort).orders" custom="org.springframework.data.domain.PageRequest,org.springframework.data.domain.Sort" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

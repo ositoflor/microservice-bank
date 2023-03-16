@@ -27,4 +27,5 @@ public interface ContaRepository extends JpaRepository<Conta, String> {
     @Modifying
     @Query(value = "UPDATE TB_CONTA c SET c.quantidadeSaque= :quantidade WHERE c.tipoConta = :tipoConta ")
     void updateSaques(@Param("tipoConta")TipoConta tipoConta, @Param("quantidade")Integer quantidate);
+
 }

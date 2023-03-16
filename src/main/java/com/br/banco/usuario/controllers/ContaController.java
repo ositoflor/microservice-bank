@@ -1,11 +1,9 @@
 package com.br.banco.usuario.controllers;
 
-import com.br.banco.usuario.domain.Cliente;
 import com.br.banco.usuario.domain.Conta;
-import com.br.banco.usuario.domain.Transacao;
+import com.br.banco.usuario.domain.enums.TipoTransacao;
 import com.br.banco.usuario.dtos.*;
 import com.br.banco.usuario.services.ContaService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,10 +48,10 @@ public class ContaController {
     }
 
     @GetMapping(value = "/buscar-conta")
-    public ResponseEntity<Conta> findByContaByAgencia(@RequestParam(name = "agencia")Integer agencia,
-                                             @RequestParam(name = "conta")Integer conta,
-                                             @RequestParam(name = "digito")Integer digito){
-        Conta conta1 = contaService.findByConta(agencia,conta,digito);
+    public ResponseEntity<Conta> findByContaByAgencia(@RequestParam(name = "agencia") Integer agencia,
+                                                      @RequestParam(name = "conta") Integer conta,
+                                                      @RequestParam(name = "digito") Integer digito) {
+        Conta conta1 = contaService.findByConta(agencia, conta, digito);
         return ResponseEntity.ok().body(conta1);
     }
 
@@ -72,13 +70,13 @@ public class ContaController {
     }
 
     @PostMapping(value = "/validar-saque")
-    public ResponseEntity<SaqueDto> validarSaque(@RequestParam(name = "id-solicitacao")String id) {
+    public ResponseEntity<SaqueDto> validarSaque(@RequestParam(name = "id-solicitacao") String id) {
         SaqueDto saqueDto = contaService.validarSaque(id);
         return ResponseEntity.ok().body(saqueDto);
     }
 
     @PostMapping(value = "/depositar")
-    public ResponseEntity<DepositoDto> depositar(@RequestBody DepositoDto depositoDto){
+    public ResponseEntity<DepositoDto> depositar(@RequestBody DepositoDto depositoDto) {
         DepositoDto deposito = contaService.deposito(depositoDto);
         return ResponseEntity.ok().body(deposito);
     }
@@ -88,11 +86,13 @@ public class ContaController {
         TransferenciaDto transferencia = contaService.transferenciaTed(transferenciaDto);
         return ResponseEntity.ok().body(transferencia);
     }
+
     @PostMapping(value = "/doc")
     public ResponseEntity<TransferenciaDto> doc(@RequestBody TransferenciaDto transferenciaDto) {
         TransferenciaDto transferencia = contaService.transferenciaDoc(transferenciaDto);
         return ResponseEntity.ok().body(transferencia);
     }
+
     @PostMapping(value = "/pix")
     public ResponseEntity<TransferenciaDto> pix(@RequestBody TransferenciaDto transferenciaDto) {
         TransferenciaDto transferencia = contaService.transferenciaPix(transferenciaDto);
@@ -100,10 +100,17 @@ public class ContaController {
     }
 
     @GetMapping(value = "/extrato")
-    public ResponseEntity<Page<Transacao>> extrato(@RequestParam(name = "agencia")Integer agencia,
-                                  @RequestParam(name = "conta")Integer conta,
-                                  @RequestParam(name = "digito")Integer digito, Pageable pageable){
-        Page<Transacao> extrato = contaService.extrato(agencia, conta, digito, pageable);
+    public ResponseEntity<Page<DefaultExtratoDto>> extrato(@RequestParam(name = "agencia") Integer agencia,
+                                                           @RequestParam(name = "conta") Integer conta,
+                                                           @RequestParam(name = "digito") Integer digito,
+                                                           @RequestParam(name = "filter",required = false ) TipoTransacao tipoTransacao,
+                                                           Pageable pageable) {
+        if (tipoTransacao == null) {
+            Page<DefaultExtratoDto> extrato = contaService.extratoPorIdConta(agencia, conta, digito,pageable);
+            return ResponseEntity.ok().body(extrato);
+        }
+
+        Page<DefaultExtratoDto> extrato = contaService.extratoPorIdContaTipoTransacao(agencia, conta, digito,tipoTransacao,pageable);
         return ResponseEntity.ok().body(extrato);
     }
 }

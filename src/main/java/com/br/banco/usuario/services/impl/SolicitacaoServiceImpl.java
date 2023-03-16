@@ -1,7 +1,7 @@
 package com.br.banco.usuario.services.impl;
 
 import com.br.banco.usuario.domain.Solicitacao;
-import com.br.banco.usuario.exceptionHandler.DefaultNotFound;
+import com.br.banco.usuario.exceptionHandler.BusinessException;
 import com.br.banco.usuario.repositories.SolicitacaoRepository;
 import com.br.banco.usuario.services.SolicitacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,6 @@ public class SolicitacaoServiceImpl implements SolicitacaoService {
     @Override
     public Solicitacao findById(String id) {
         var solicitacao = solicitacaoRepository.findById(id);
-        return solicitacao.orElseThrow(() -> new DefaultNotFound("Solicitação não encontrada."));
+        return solicitacao.orElseThrow(() -> new BusinessException("Solicitação não encontrada."));
     }
 }
